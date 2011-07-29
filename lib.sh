@@ -12,7 +12,7 @@ txtred='\e[0;31m' # Red
 ## Checks if the server is online.
 # Returns 0 if online, 1 otherwise.
 function dbox::check_server() {
-	ping -c 1 $DBOX_SERVER > /dev/null || false
+	ping -c 1 $DBOX_HOST > /dev/null || false
 }
 
 
@@ -66,13 +66,13 @@ function dbox::check_path() {
 ## Updates our local directory with the files in the derpbox.
 function dbox::update_local_from_remote() {
 	dbox::log "Updating local path."
-	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_DL $DBOX_USER@$DBOX_SERVER:"$DBOX_RPATH/" "$DBOX_LPATH/" > /dev/null
+	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_DL $DBOX_USER@$DBOX_HOST:"$DBOX_RPATH/" "$DBOX_LPATH/" > /dev/null
 }
 
 ## Updates the derpbox with our local files.
 function dbox::update_remote_from_local() {
 	dbox::log "Updating the derpbox."
-	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_UP "$DBOX_LPATH/" $DBOX_USER@$DBOX_SERVER:"$DBOX_RPATH/" > /dev/null
+	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_UP "$DBOX_LPATH/" $DBOX_USER@$DBOX_HOST:"$DBOX_RPATH/" > /dev/null
 }
 
 ## Put a line in our crontab.

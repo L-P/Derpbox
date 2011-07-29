@@ -6,7 +6,7 @@
 #																Léo Peltier
 
 # You may happily edit the vars below.
-export DBOX_SERVER=localhost					# Remote server address.
+export DBOX_HOST=localhost						# Remote server address.
 export DBOX_USER=$USER							# Remote user name.
 export DBOX_RPATH="/home/$USER/dbox_remote"		# Remote path where we will store our files.
 export DBOX_LPATH="/home/$USER/dbox_local"		# Local path where our files are stored.
