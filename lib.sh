@@ -66,13 +66,15 @@ function dbox::check_path() {
 ## Updates our local directory with the files in the derpbox.
 function dbox::update_local_from_remote() {
 	dbox::log "Updating local path."
-	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_DL $DBOX_USER@$DBOX_HOST:"$DBOX_RPATH/" "$DBOX_LPATH/" > /dev/null
+	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_DL --rsh="$DBOX_SSH_CMD" \
+			$DBOX_USER@$DBOX_HOST:"$DBOX_RPATH/" "$DBOX_LPATH/" > /dev/null
 }
 
 ## Updates the derpbox with our local files.
 function dbox::update_remote_from_local() {
 	dbox::log "Updating the derpbox."
-	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_UP "$DBOX_LPATH/" $DBOX_USER@$DBOX_HOST:"$DBOX_RPATH/" > /dev/null
+	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_UP --rsh="$DBOX_SSH_CMD" \
+			"$DBOX_LPATH/" $DBOX_USER@$DBOX_HOST:"$DBOX_RPATH/" > /dev/null
 }
 
 ## Put a line in our crontab.
