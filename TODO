@@ -1,0 +1,11 @@
+    We can't delete files without direct access to the remote server.
+This may be considered as a bug but it may also prevent stupid things
+from happening. Full-sync won't be achieved with rsync anyway, so having
+such a functionality will require to break the almost non-existent
+dependencies of derpbox or will require hack-ish ways to detect if
+something was deleted on purpose by the user and not because the user
+updated an outdated folder with missing files.
+
+    A notification system would be nice but we can't require everyone to
+have notify-send. Research shall be done.
+
