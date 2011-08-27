@@ -21,7 +21,7 @@ function dbox::log() {
 	echo -e "$txtblu[DBOX $(date +%s)]$txtrst $@"
 }
 
-## Outputs an error line to stderr.:w
+## Outputs an error line to stderr.
 function dbox::error() {
 	echo -e "$txtred[DBOX $(date +%s)]$txtrst $@" 1>&2
 }
