@@ -80,7 +80,7 @@ function dbox::update_remote_from_local() {
 ## Put a line in our crontab.
 function dbox::install_derpbox() {
 	curDir=$(pwd)
-	local cronLine="*/5 * * * * $curDir/update.sh #derpbox_do_not_remove_comment"
+	local cronLine="*/5 * * * * $curDir/update.sh > /dev/null #derpbox_do_not_remove_comment"
 	(crontab -l | grep -v "derpbox_do_not_remove_comment"; echo "$cronLine") | crontab - > /dev/null
 }
 
