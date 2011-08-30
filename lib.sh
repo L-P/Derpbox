@@ -21,10 +21,12 @@ function dbox::log() {
 	echo -e "$txtblu[DBOX $(date +%s)]$txtrst $@"
 }
 
-## Outputs an error line to stderr.
+
+## Outputs an error line to stderr.:w
 function dbox::error() {
 	echo -e "$txtred[DBOX $(date +%s)]$txtrst $@" 1>&2
 }
+
 
 ## Checks if the required software are installed.
 function dbox::check_software() {
@@ -39,6 +41,7 @@ function dbox::check_software() {
 	fi
 }
 
+
 ## Checks if we are root (failure) or not.
 function dbox::check_user() {
 	if [[ $UID -eq 0 ]]; then
@@ -46,6 +49,7 @@ function dbox::check_user() {
 		false
 	fi
 }
+
 
 ## Checks if the local path exists.
 function dbox::check_path() {
@@ -63,29 +67,46 @@ function dbox::check_path() {
 	false
 }
 
+
 ## Updates our local directory with the files in the derpbox.
 function dbox::update_local_from_remote() {
 	dbox::log "Updating local path."
-	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_DL --rsh="$DBOX_SSH_CMD" \
-			$DBOX_USER@$DBOX_HOST:"$DBOX_RPATH/" "$DBOX_LPATH/" > /dev/null
+	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_DL \
+		--exclude-from="$DBOX_EXCLUDE_FILE" --rsh="$DBOX_SSH_CMD" \
+		$DBOX_USER@$DBOX_HOST:"$DBOX_RPATH/" "$DBOX_LPATH/" > /dev/null
 }
+
 
 ## Updates the derpbox with our local files.
 function dbox::update_remote_from_local() {
 	dbox::log "Updating the derpbox."
-	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_UP --rsh="$DBOX_SSH_CMD" \
-			"$DBOX_LPATH/" $DBOX_USER@$DBOX_HOST:"$DBOX_RPATH/" > /dev/null
+	rsync $DBOX_RSYNC_OPTS_BOTH $DBOX_RSYNC_OPTS_UP \
+		--exclude-from="$DBOX_EXCLUDE_FILE" --rsh="$DBOX_SSH_CMD" \
+		"$DBOX_LPATH/" $DBOX_USER@$DBOX_HOST:"$DBOX_RPATH/" > /dev/null
 }
+
 
 ## Put a line in our crontab.
 function dbox::install_derpbox() {
 	curDir=$(pwd)
-	local cronLine="*/5 * * * * $curDir/update.sh > /dev/null #derpbox_do_not_remove_comment"
+	local cronLine="*/5 * * * * $curDir/update.sh #derpbox_do_not_remove_comment"
 	(crontab -l | grep -v "derpbox_do_not_remove_comment"; echo "$cronLine") | crontab - > /dev/null
 }
+
 
 ## Removes the line from the crontab.
 function dbox::remove_derpbox() {
 	(crontab -l | grep -v "derpbox_do_not_remove_comment") | crontab - > /dev/null
+}
+
+
+## Creates the excludes file, fill it and put its path in DBOX_EXCLUDE_FILE
+function dbox::create_excludes_file() {
+	local path=$(mktemp --tmpdir='/tmp' 'dbox_excludes.XXXXXXXXXX')
+	for ex in $DBOX_EXCLUDE; do
+		echo $ex >> $path
+	done
+
+	DBOX_EXCLUDE_FILE=$path
 }
 

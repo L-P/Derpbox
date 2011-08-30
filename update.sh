@@ -25,8 +25,10 @@ dbox::check_server		|| exit 4
 dbox::check_path		|| exit 5
 
 # Actually do something.
+dbox::create_excludes_file
 dbox::update_local_from_remote	|| exit 6
 dbox::update_remote_from_local	|| exit 7
+rm $DBOX_EXCLUDE_FILE
 
 dbox::log "Succefully updated all the things."
 
