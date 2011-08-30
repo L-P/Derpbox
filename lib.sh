@@ -101,7 +101,7 @@ function dbox::remove_derpbox() {
 
 
 ## Creates the excludes file, fill it and put its path in DBOX_EXCLUDE_FILE
-function dbox::create_excludes_file() {
+function dbox::create_exclude_file() {
 	local path=$(mktemp --tmpdir='/tmp' 'dbox_excludes.XXXXXXXXXX')
 	for ex in $DBOX_EXCLUDE; do
 		echo $ex >> $path

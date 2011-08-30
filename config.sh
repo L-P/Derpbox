@@ -14,7 +14,7 @@ export DBOX_LPATH="/home/$USER/dbox_local"		# Local path where our files are sto
 export DBOX_EXCLUDE="*.swp *.lock *~"
 
 # Only change the vars below if you know what you are doing.
-export DBOX_EXCLUDE_FILE='' # Don't change this, it will be overwritten by dbox::create_excludes_file
+export DBOX_EXCLUDE_FILE='' # Don't change this, it will be overwritten by dbox::create_exclude_file
 export DBOX_RSYNC_OPTS_DL='--update' # We don't want to overwrite changed files.
 export DBOX_RSYNC_OPTS_UP=''
 export DBOX_RSYNC_OPTS_BOTH="--verbose --recursive --checksum --one-file-system --compress
