@@ -1,6 +1,10 @@
 Derpbox
 =======
 
+THIS PROJECT IS DEPRECATED
+--------------------------
+Please use git instead.
+
 What?
 -----
 Derpbox is a secure replacement for Dropbox, written in bash. Released
