@@ -1,7 +1,7 @@
 Derpbox
 =======
 
-THIS PROJECT IS DEPRECATED
+THIS PROJECT IS DERPRECATED
 --------------------------
 Please use git instead.
 
